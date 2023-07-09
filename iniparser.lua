@@ -1,5 +1,5 @@
 local ini <const> = {
-    version = "0.2.10",
+    version = "0.2.11",
     __debug = false
 }
 
@@ -150,6 +150,10 @@ function ini.parse(path, cwd)
                         if cache_val then
                             serialized_val = cache_val
                         else
+
+                            -- For locales using comma as decimal comma separator
+                            if type(value) == "string" then value = value:gsub(",", ".") end
+
                             local nVal <const> = tonumber(value)
                             local bVal <const> = luaBoolValues[value]
 
