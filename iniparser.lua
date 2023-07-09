@@ -11,14 +11,7 @@ local type <const>,
       str_len <const>,
       tostring <const>,
       tonumber <const>,
-      str_gmatch <const>,
-      default_path = type, io.open, string.sub, string.len, utostring, utonumber, string.gmatch, nil
-
-if menu then
-    default_path = filesystem.scripts_dir() .. '\\store\\'
-else
-    default_path = "./"
-end
+      str_gmatch <const> = type, io.open, string.sub, string.len, utostring, utonumber, string.gmatch
 
 -----------------------
 --  Debug Utilities  --
