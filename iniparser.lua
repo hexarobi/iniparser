@@ -151,7 +151,7 @@ function ini.parse(path, cwd)
                             serialized_val = cache_val
                         else
 
-                            -- For locales using comma as decimal comma separator
+                            -- For files from locales using comma as decimal separator
                             if type(value) == "string" then value = value:gsub(",", ".") end
 
                             local nVal <const> = tonumber(value)
