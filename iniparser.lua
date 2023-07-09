@@ -1,5 +1,5 @@
 local ini <const> = {
-    version = "0.2.8",
+    version = "0.2.10",
     __debug = false
 }
 
