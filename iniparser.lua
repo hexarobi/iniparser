@@ -93,7 +93,9 @@ function ini.parse(path, cwd)
     assert(type(path) == "string", "ini.parse 'path' must be a string.")
 
     -- Decipher `path` and decide whether it's absolute or relative.
-    local path = cwd .. path 
+    if cwd ~= nil then
+        path = cwd .. path
+    end
 
     local res <const>,
           cache <const>,
