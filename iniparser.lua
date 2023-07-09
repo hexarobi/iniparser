@@ -15,7 +15,7 @@ local type <const>,
       default_path = type, io.open, string.sub, string.len, tostring, tonumber, string.gmatch, nil
 
 if menu then
-    default_path = utils.get_appdata_path("PopstarDevs\\2Take1Menu\\scripts", "") .. "\\"
+    default_path = filesystem.scripts_dir() .. '\\store\\'
 else
     default_path = "./"
 end
@@ -93,43 +93,7 @@ function ini.parse(path, cwd)
     assert(type(path) == "string", "ini.parse 'path' must be a string.")
 
     -- Decipher `path` and decide whether it's absolute or relative.
-    do
-        cwd = cwd or default_path
-        local _1 <const>, absStatus = pcall(function() return f_open(path) ~= nil end)
-        local _2 <const>, relStatus = pcall(function() return f_open(path) ~= nil end)
-
-        -- We need to ensure there were no errors for 2T1 compatibility.
-        absStatus = _1 and absStatus
-        relStatus = _2 and relStatus
-
-        if absStatus then
-            path = path
-        elseif relStatus and not absStatus then
-            path = cwd..path
-        elseif not (absStatus and relStatus) then
-            -- Note: Wrapping in pcall remains for 2T1 API support, since errors are thrown for non-appdata paths.
-            local status, _ = pcall(function ()
-                local f = f_open(path, "a+")
-                if f then f:close() end
-            end)
-
-            if status then
-                path = path
-            else
-                status, _ = pcall(function ()
-                    local f = f_open(cwd .. path, "a+")
-                    if f then f:close() end
-                end)
-
-                if not status then
-                    print("Err Paths:\n1:"..cwd..path.."\n2:"..path)
-                    error "ini.parse path leads to nil file. Check debug console for err paths."
-                else
-                    path = cwd .. path
-                end
-            end
-        end
-    end
+    local path = cwd .. path 
 
     local res <const>,
           cache <const>,
